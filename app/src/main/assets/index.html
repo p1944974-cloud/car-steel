@@ -165,8 +165,17 @@ h2 {
 let speed = 100;
 
 function changeSpeed(amount) {
-    speed = Math.max(0, Math.min(255, speed + amount));
+    speed = Math.max(0, Math.min(100, speed + amount));
+
     document.getElementById("speed").textContent = speed;
+
+    sendSpeed();
+}
+
+function sendSpeed() {
+    if (window.Android) {
+        Android.sendCommand("V" + speed + "\n");
+    }
 }
 
 function send(command) {
@@ -179,6 +188,7 @@ function connectBluetooth() {
     if (window.Android) {
         document.getElementById("status").textContent =
             "CONECTANDO...";
+
         Android.connectBluetooth();
     }
 }
