@@ -1,4 +1,3 @@
-
 name: Build CAR STEEL APK
 
 on:
@@ -24,6 +23,11 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
+
+      - name: Revisar archivos XML
+        run: |
+          find . -name "*.xml" -not -path "*/.gradle/*" -print
+          python3 -c "import xml.etree.ElementTree as ET, pathlib; [ET.parse(p) for p in pathlib.Path('.').rglob('*.xml') if '.gradle' not in str(p)]; print('XML correctos')"
 
       - name: Compilar APK
         run: gradle :app:assembleDebug --stacktrace --info
