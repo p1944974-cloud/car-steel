@@ -1,3 +1,4 @@
+
 name: Build CAR STEEL APK
 
 on:
@@ -19,15 +20,13 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      
-
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
 
       - name: Compilar APK
-run: gradle :app:assembleDebug --stacktrace --info
+        run: gradle :app:assembleDebug --stacktrace --info
 
       - name: Guardar APK
         uses: actions/upload-artifact@v4
