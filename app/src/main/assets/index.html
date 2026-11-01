@@ -164,6 +164,7 @@ h2 {
 <script>
 let speed = 100;
 
+// CAMBIAR VELOCIDAD DE 0 A 100
 function changeSpeed(amount) {
     speed = Math.max(0, Math.min(100, speed + amount));
 
@@ -172,18 +173,23 @@ function changeSpeed(amount) {
     sendSpeed();
 }
 
+// CONVERTIR VELOCIDAD DE 0-100 A 0-255
 function sendSpeed() {
     if (window.Android) {
-        Android.sendCommand("V" + speed + "\n");
+        let velocidadReal = Math.round(speed * 255 / 100);
+
+        Android.sendCommand("V" + velocidadReal + "\n");
     }
 }
 
+// ENVIAR MOVIMIENTOS
 function send(command) {
     if (window.Android) {
         Android.sendCommand(command);
     }
 }
 
+// CONECTAR BLUETOOTH
 function connectBluetooth() {
     if (window.Android) {
         document.getElementById("status").textContent =
@@ -191,6 +197,11 @@ function connectBluetooth() {
 
         Android.connectBluetooth();
     }
+}
+
+// ACTUALIZAR VELOCIDAD DESPUÉS DE CONECTAR
+function bluetoothConnected() {
+    sendSpeed();
 }
 </script>
 
